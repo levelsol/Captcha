@@ -1,0 +1,3 @@
+{
+  "response": "{'model': 'llava:latest', 'created_at': '2025-09-07T07:21:59.864530016Z', 'message': {'role': 'assistant', 'content': ' ```json\\n{\\n  \"challenge_prompt\": \"Select creatures that call the forest environment home\",\\n  \"points\": [\\n    {\"x\": 234, \"y\": 456},\\n    {\"x\": 567, \"y\": 123}\\n  ]\\n}\\n``` '}, 'done_reason': 'stop', 'done': True, 'total_duration': 1305036129, 'load_duration': 19917497, 'prompt_eval_count': 439, 'prompt_eval_duration': 3677540, 'eval_count': 76, 'eval_duration': 1279514270}"
+}

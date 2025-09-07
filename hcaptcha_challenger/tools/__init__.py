@@ -9,6 +9,7 @@ from .image_classifier import ImageClassifier
 from .spatial_bbox_reasoning import SpatialBboxReasoner
 from .spatial_path_reasoning import SpatialPathReasoner
 from .spatial_point_reasoning import SpatialPointReasoner
+from .ollama_client import OllamaClient
 
 __all__ = [
     "ImageClassifier",
@@ -16,4 +17,5 @@ __all__ = [
     'SpatialPathReasoner',
     'SpatialPointReasoner',
     'SpatialBboxReasoner',
+    'OllamaClient',
 ]

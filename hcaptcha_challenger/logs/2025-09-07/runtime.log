@@ -1,0 +1,152 @@
+2025-09-07 12:46:08.741 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:46:08.753 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:267 - Create cache-key [Direct] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\image_label_area_select\Select creatures that call the forest environment home\20250907\20250907124608752684
+2025-09-07 12:46:26.387 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Identify specific object(s) or area based on the challenge prompt.",
+  "Coordinates": "[{'x': 3, 'y': 4}, {'x': 7, 'y': 6}]"
+}
+2025-09-07 12:46:59.491 | ERROR    | hcaptcha_challenger.agent.challenger:_solve_captcha:897 - ChallengeException - type=image_label_multi_select err=TimeoutError('Locator.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("//div[@class=\'challenge-view\']")\n')
+Traceback (most recent call last):
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\main.py", line 141, in <module>
+    asyncio.run(main())
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 712, in run_until_complete
+    self.run_forever()
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 683, in run_forever
+    self._run_once()
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 2042, in _run_once
+    handle._run()
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\events.py", line 89, in _run
+    self._context.run(self._callback, *self._args)
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\main.py", line 117, in main
+    agent = await challenge(page)
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\main.py", line 91, in challenge
+    result = await agent.wait_for_challenge()
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\agent\challenger.py", line 907, in wait_for_challenge
+    await asyncio.wait_for(self._solve_captcha(), timeout=self.config.EXECUTION_TIMEOUT)
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py", line 507, in wait_for
+    return await fut
+> File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\agent\challenger.py", line 870, in _solve_captcha
+    return await self.robotic_arm.challenge_image_label_select(challenge_type)
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\agent\challenger.py", line 649, in challenge_image_label_select
+    raw, projection = await self._capture_spatial_mapping(frame_challenge, cache_key, cid)
+  File "c:\Users\kingo\Desktop\Captcha3\hcaptcha\src\hcaptcha_challenger\agent\challenger.py", line 489, in _capture_spatial_mapping
+    await challenge_view.screenshot(type="png", path=challenge_screenshot)
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\async_api\_generated.py", line 17258, in screenshot
+    await self._impl_obj.screenshot(
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_locator.py", line 543, in screenshot
+    return await self._with_element(
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_locator.py", line 112, in _with_element
+    handle = await self.element_handle(timeout=timeout)
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_locator.py", line 316, in element_handle
+    handle = await self._frame.wait_for_selector(
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_frame.py", line 369, in wait_for_selector
+    await self._channel.send(
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+  File "C:\Users\kingo\AppData\Local\Programs\Python\Python313\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Locator.screenshot: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("//div[@class='challenge-view']")
+
+2025-09-07 12:47:04.505 | ERROR    | hcaptcha_challenger.agent.challenger:get_challenge_frame_locator:346 - Cannot find a valid challenge frame
+2025-09-07 12:51:34.530 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:51:35.052 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125135052318
+2025-09-07 12:51:46.230 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:51:46.231 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:51:51.172 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:51:51.173 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [2/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:51:52.750 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:51:53.479 | WARNING  | hcaptcha_challenger.agent.challenger:wait_for_challenge:928 - Failed to challenge, try to retry the strategy
+2025-09-07 12:51:55.993 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:51:56.514 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125156514444
+2025-09-07 12:51:59.907 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:51:59.908 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:04.869 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:52:04.870 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [2/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:06.424 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:52:07.202 | WARNING  | hcaptcha_challenger.agent.challenger:wait_for_challenge:928 - Failed to challenge, try to retry the strategy
+2025-09-07 12:52:10.138 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:52:10.661 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125210661192
+2025-09-07 12:52:14.039 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:52:14.039 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:19.012 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:52:19.013 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [2/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:20.605 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:52:21.443 | WARNING  | hcaptcha_challenger.agent.challenger:wait_for_challenge:928 - Failed to challenge, try to retry the strategy
+2025-09-07 12:52:23.972 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:52:24.483 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125224482962
+2025-09-07 12:52:27.879 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:52:27.880 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:32.874 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:168 - Final coordinates: [{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]
+2025-09-07 12:52:32.875 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [2/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 234, 'y': 400}, {'x': 567, 'y': 123}]"
+}
+2025-09-07 12:52:34.438 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:52:35.947 | WARNING  | hcaptcha_challenger.agent.challenger:wait_for_challenge:928 - Failed to challenge, try to retry the strategy
+2025-09-07 12:56:58.245 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_binary count=1
+2025-09-07 12:56:58.768 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125658767987
+2025-09-07 12:57:01.586 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_binary:588 - [1/1]ToolInvokeMessage: {
+  "Challenge Prompt": "description of the challenge",
+  "Coordinates": "[]"
+}
+2025-09-07 12:57:01.950 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:57:03.346 | SUCCESS  | hcaptcha_challenger.agent.challenger:wait_for_challenge:934 - Challenge success
+2025-09-07 12:57:33.988 | DEBUG    | hcaptcha_challenger.agent.challenger:_solve_captcha:838 - Start Challenge - type=image_label_multi_select count=2
+2025-09-07 12:57:34.512 | DEBUG    | hcaptcha_challenger.agent.challenger:create_cache_key:246 - Create cache-key [NotCaptchaPayload] - C:\Users\kingo\Desktop\Captcha3\hcaptcha\src\tmp\.challenge\type\unknown\20250907\20250907125734512646
+2025-09-07 12:57:38.261 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:135 - Raw AI response:  ```json
+{
+  "challenge_prompt": "Select creatures that call the forest environment home",
+  "points": [
+    {"x": 350, "y": 487},
+    {"x": 600, "y": 492}
+  ]
+}
+``` ...
+2025-09-07 12:57:38.262 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:178 - Final coordinates to click: [{'x': 350, 'y': 487}, {'x': 600, 'y': 492}]
+2025-09-07 12:57:38.263 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [1/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 350, 'y': 487}, {'x': 600, 'y': 492}]"
+}
+2025-09-07 12:57:43.122 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:135 - Raw AI response:  ```json
+{
+  "challenge_prompt": "Select creatures that call the forest environment home",
+  "points": [
+    {"x": 350, "y": 487},
+    {"x": 625, "y": 519}
+  ]
+}
+``` ...
+2025-09-07 12:57:43.122 | INFO     | hcaptcha_challenger.tools.spatial_point_reasoning:invoke_async:178 - Final coordinates to click: [{'x': 350, 'y': 487}, {'x': 625, 'y': 519}]
+2025-09-07 12:57:43.123 | DEBUG    | hcaptcha_challenger.agent.challenger:challenge_image_label_select:659 - [2/2]ToolInvokeMessage: {
+  "Challenge Prompt": "Select creatures that call the forest environment home",
+  "Coordinates": "[{'x': 350, 'y': 487}, {'x': 625, 'y': 519}]"
+}
+2025-09-07 12:57:44.701 | DEBUG    | hcaptcha_challenger.agent.challenger:wait_for_challenge:916 - Start checking captcha response
+2025-09-07 12:58:44.707 | ERROR    | hcaptcha_challenger.agent.challenger:wait_for_challenge:922 - Wait for captcha response timeout 60.0s
+2025-09-07 13:03:47.766 | ERROR    | hcaptcha_challenger.agent.challenger:get_challenge_frame_locator:346 - Cannot find a valid challenge frame

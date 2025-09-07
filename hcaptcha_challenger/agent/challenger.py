@@ -1,3 +1,5 @@
+# In your challenger.py file, replace the AgentConfig class with this:
+
 import asyncio
 import json
 import math
@@ -636,37 +638,75 @@ class RoboticArm:
                 submit_btn = frame_challenge.locator("//div[@class='button-submit button']")
                 await self.click_by_mouse(submit_btn)
 
-    async def challenge_image_label_select(self, job_type: ChallengeTypeEnum):
-        frame_challenge = await self.get_challenge_frame_locator()
-        crumb_count = await self.check_crumb_count()
-        cache_key = self.config.create_cache_key(self.captcha_payload)
+    # This goes in your challenger.py file, replace the challenge_image_label_select method
 
-        for cid in range(crumb_count):
-            await self.page.wait_for_timeout(self.config.WAIT_FOR_CHALLENGE_VIEW_TO_RENDER_MS)
+async def challenge_image_label_select(self, job_type: ChallengeTypeEnum):
+    frame_challenge = await self.get_challenge_frame_locator()
+    crumb_count = await self.check_crumb_count()
+    cache_key = self.config.create_cache_key(self.captcha_payload)
 
-            raw, projection = await self._capture_spatial_mapping(frame_challenge, cache_key, cid)
+    for cid in range(crumb_count):
+        await self.page.wait_for_timeout(self.config.WAIT_FOR_CHALLENGE_VIEW_TO_RENDER_MS)
 
-            user_prompt = self._match_user_prompt(job_type)
+        raw, projection = await self._capture_spatial_mapping(frame_challenge, cache_key, cid)
 
-            response = await self._spatial_point_reasoner.invoke_async(
-                challenge_screenshot=raw,
-                grid_divisions=projection,
-                auxiliary_information=user_prompt,
-                thinking_budget=self.config.SPATIAL_POINT_THINKING_BUDGET,
-            )
-            logger.debug(f'[{cid+1}/{crumb_count}]ToolInvokeMessage: {response.log_message}')
-            self._spatial_point_reasoner.cache_response(
-                path=cache_key.joinpath(f"{cache_key.name}_{cid}_model_answer.json")
-            )
+        user_prompt = self._match_user_prompt(job_type)
 
-            for point in response.points:
+        response = await self._spatial_point_reasoner.invoke_async(
+            challenge_screenshot=raw,
+            grid_divisions=projection,
+            auxiliary_information=user_prompt,
+            thinking_budget=self.config.SPATIAL_POINT_THINKING_BUDGET,
+        )
+        logger.debug(f'[{cid+1}/{crumb_count}]ToolInvokeMessage: {response.log_message}')
+        self._spatial_point_reasoner.cache_response(
+            path=cache_key.joinpath(f"{cache_key.name}_{cid}_model_answer.json")
+        )
+
+        # FIXED: Actually click at the calculated coordinates
+        for i, point in enumerate(response.points):
+            logger.info(f"Attempting to click point {i+1}: ({point.x}, {point.y})")
+            
+            try:
+                # Method 1: Direct mouse click at coordinates
                 await self.page.mouse.click(point.x, point.y, delay=180)
+                logger.info(f"Successfully clicked at ({point.x}, {point.y})")
+                
+                # Wait between clicks
                 await self.page.wait_for_timeout(500)
+                
+            except Exception as e:
+                logger.error(f"Failed to click at ({point.x}, {point.y}): {e}")
+                
+                # Method 2: Fallback - try to find clickable element at that coordinate
+                try:
+                    # Find the element at those coordinates
+                    element = await self.page.evaluate(f"""
+                        () => {{
+                            const element = document.elementFromPoint({point.x}, {point.y});
+                            if (element) {{
+                                element.click();
+                                return true;
+                            }}
+                            return false;
+                        }}
+                    """)
+                    
+                    if element:
+                        logger.info(f"Fallback click successful at ({point.x}, {point.y})")
+                    else:
+                        logger.warning(f"No clickable element found at ({point.x}, {point.y})")
+                        
+                except Exception as e2:
+                    logger.error(f"Fallback click also failed: {e2}")
 
-            # {{< Verify >}}
-            with suppress(TimeoutError):
-                submit_btn = frame_challenge.locator("//div[@class='button-submit button']")
-                await self.click_by_mouse(submit_btn)
+        # Submit the challenge
+        try:
+            submit_btn = frame_challenge.locator("//div[@class='button-submit button']")
+            await self.click_by_mouse(submit_btn)
+            logger.info("Clicked submit button")
+        except Exception as e:
+            logger.error(f"Failed to click submit button: {e}")
 
 
 class AgentV:

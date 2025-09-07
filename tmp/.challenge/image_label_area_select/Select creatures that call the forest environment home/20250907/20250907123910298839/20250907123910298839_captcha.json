@@ -1,0 +1,53 @@
+{
+  "key": "E0_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYXRhIjoiWmlpb3BIZDZtTDFzZU0zaUkwNElSVTJkT2FRNHZOc2tmbTlNNGF1MDlnd1ZERWE3eFFsQ2orbVRIaTFORWZkeXdObE5POXNYdFhEeU1sMXhHRStlOU8rVDRqTjVCK3RZblRVeTN1YVNMUk1HaFNWbzNvOTJmbWxHQ1dqYzZiQWFhV2FEdVZmdEc5TWdOSVNhTjBwdTFEeWVpRWlvREZ5NHI1V280bnYwZnlwS1ZQOTFrZjRRMFcxd3Ryb1JCNk13eUdPemNtb1RjazBNaC9XcHBKQmgvREhybXVIdjB4cktEM0I3M2dmZUE3Tlk5dlI0V3RIdkdkaDYvbTJTMUV4T2dPcXBhUUtBNjFybTl0NEM3UT09N1RyRlA5S1VWOXdSeXE1VSIsImV4cCI6MTc1NzIyOTAzOSwia3IiOiI0ODlhZGM1MiJ9.FTdBLKdrnMbQCX4PjMXwcNRoxXi8adkFHuz1TI8f9ZM",
+  "request_config": {
+    "version": 0,
+    "shape_type": "point",
+    "min_points": null,
+    "max_points": null,
+    "min_shapes_per_image": 1,
+    "max_shapes_per_image": 5,
+    "restrict_to_coords": null,
+    "minimum_selection_area_per_shape": null,
+    "multiple_choice_max_choices": 1,
+    "multiple_choice_min_choices": 1,
+    "overlap_threshold": null,
+    "answer_type": "str",
+    "max_value": null,
+    "min_value": null,
+    "max_length": null,
+    "min_length": null,
+    "sig_figs": null,
+    "keep_answers_order": null,
+    "ignore_case": false,
+    "new_translation": true
+  },
+  "request_type": "image_label_area_select",
+  "requester_question": {
+    "en": "Select creatures that call the forest environment home"
+  },
+  "requester_restricted_answer_set": {
+    "default": {
+      "en": "default"
+    }
+  },
+  "requester_question_example": "https://imgs3.hcaptcha.com/tip/793d2e191904ab59fb6a4aa3392002269f0f31ca0eff2d9cf87c740f230f3676/263444a084aa61ef1a9a825092b5485fdd04a3c275270a122061eb6cfbdcf01c.jpeg",
+  "tasklist": [
+    {
+      "datapoint_uri": "https://imgs3.hcaptcha.com/tip/5157235ecaefaa58467fbee78df3961e71f1017d34b6c94d428f92ab4ea6009b/7189e8bcef14f7081a0ac3573fd5918e6de2dc2ec4a5e24dd0a9d9743d656b62.jpg",
+      "task_key": "146ed660-0073-4e95-b2e2-0a3edd14016a",
+      "entities": []
+    },
+    {
+      "datapoint_uri": "https://imgs3.hcaptcha.com/tip/5ca335836d8f2071dda34f35bd860748f0ba74be367e04b2973ff3a3b80ce33d/f479753fb136e4342b62f81f5ebf8cf9b02017a36a9365b987796e69b77f7719.jpg",
+      "task_key": "b401eb04-df60-4e26-a713-d6b2fc56b066",
+      "entities": []
+    }
+  ],
+  "oby": "v2:sGhAIrvZQM5kut7b2eHipzNkNTg2OGJhkU3qjfXSuIJqdy7PO688LzXEVb29J+Gf/I+LrN1fUogs9vviw7z6m+mvKIVHVz4DO0RdXfBv2we29plZOMWUKFMu2ldO942FIzifyyBk3wV851ZO+SG7W0K7O+PJGhTVbP45OWAwJ650ne9KD1JUdZY6mI3QDVh795OiPL6GyaQ=",
+  "normalized": true,
+  "c": {
+    "req": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmIjowLCJzIjoyLCJ0IjoidyIsImQiOiJ0U2JKcXJ1Mnk1VVNQcGpocVAzM3praVp2VGwrczg1S1E3L3hDdUQ4b2dDZGdhWStiYmtVYlV3ZmY5amdKQXpmOVNoY0Q0aW9pMU1hdFdZSWZjYWlqK2Nqc2xTa3RRN2dPZWJSNm5DSkFHdHlHS0FMelB0ZUY4UnlBMHhwU1NPbm1FZkJyeCtRclBDck93dGVjMlp6WGYzTU1kam5sd29SRDZabWwzNWRxU0ZwOFBvQllTcHBJWDhxYnprYkFHWE9wem1ldGtENkozaTRXU3UrRG5uRWpTZnR3b2k4RWZldFJwdFFUSTAxWVdVRERSNnhWVi9NdGNCSlBUZ2JSbEpuOHc9PTNvSDRXa0xraXM1QXpoQ08iLCJsIjoiL2MvYjI2MTg1ODhiZDBlOGVhZWY0NDIwYmQ5ZGZiZjZhOTgzNWZhNGUzZGQ3ZDU2NzkxODNhOWI2NDlkYTBmZjRlYSIsImkiOiJzaGEyNTYtSm9SOXRSdVVYL3o0bGpab1o4ZUVoYUNYcUg1VkJSNEE1Ymwza3lTOHRyST0iLCJlIjoxNzU3MjMwNzQ5LCJuIjoiaHN3IiwiYyI6MTAwMH0.3WJeCD62kmAFJqtfVdCWx1fEoZAHmc1DmITM-O8QbH4",
+    "type": "hsw"
+  }
+}

@@ -274,7 +274,7 @@ class VisualAnalysisSolver:
             self.drag_count += 1
             print("Drag operation completed")
             
-            await asyncio.sleep(1)
+            await asyncio.sleep(2)
             return await self.submit_challenge(challenge_frame)
             
         except Exception as e:
@@ -341,7 +341,7 @@ class VisualAnalysisSolver:
                 except Exception as e:
                     print(f"Click {i+1} failed: {e}")
             
-            await asyncio.sleep(1)
+            await asyncio.sleep(2)
             return await self.submit_challenge(challenge_frame)
             
         except Exception as e:
@@ -349,51 +349,117 @@ class VisualAnalysisSolver:
             return False
     
     async def submit_challenge(self, challenge_frame):
-        """Find and click submit button"""
+        """Find and click submit/verify/skip button - always try to solve first, then click appropriate button"""
         try:
-            # Look for submit buttons
-            submit_found = False
+            print("Looking for submit/verify/skip button...")
             
-            # Try different button selectors
-            button_selectors = [
-                'button:has-text("Verify")',
-                'button:has-text("Submit")', 
-                'button:has-text("Check")',
-                'button:has-text("Next")',
-                '.button-submit',
-                '[class*="submit"]',
-                '[class*="verify"]',
-                'button'
+            # Wait a bit for the UI to update after drag/click
+            await asyncio.sleep(1)
+            
+            # First, try to find buttons by examining all button elements
+            all_buttons = await challenge_frame.evaluate("""
+                () => {
+                    const buttons = [];
+                    const buttonElements = document.querySelectorAll('button, input[type="button"], input[type="submit"], [role="button"], .button, [class*="button"], [class*="skip"], [class*="verify"], [class*="submit"]');
+                    
+                    buttonElements.forEach((btn, i) => {
+                        const rect = btn.getBoundingClientRect();
+                        const isVisible = rect.width > 0 && rect.height > 0 && 
+                                         window.getComputedStyle(btn).visibility !== 'hidden' &&
+                                         window.getComputedStyle(btn).display !== 'none';
+                        
+                        if (isVisible) {
+                            buttons.push({
+                                index: i,
+                                text: btn.innerText || btn.textContent || btn.value || '',
+                                className: btn.className || '',
+                                id: btn.id || '',
+                                x: rect.x + rect.width / 2,
+                                y: rect.y + rect.height / 2,
+                                width: rect.width,
+                                height: rect.height
+                            });
+                        }
+                    });
+                    
+                    return buttons;
+                }
+            """)
+            
+            print(f"Found {len(all_buttons)} visible buttons:")
+            for btn in all_buttons:
+                print(f"  Button: '{btn['text']}' (class: {btn['className']}, id: {btn['id']})")
+            
+            # Look for different types of buttons
+            verify_button = None
+            submit_button = None
+            skip_button = None
+            
+            for btn in all_buttons:
+                btn_text = btn['text'].lower().strip()
+                btn_class = btn['className'].lower()
+                
+                # Check for different button types
+                if 'verify' in btn_text or 'verify' in btn_class:
+                    verify_button = btn
+                    print(f"Found VERIFY button: '{btn['text']}'")
+                elif 'skip' in btn_text or 'skip' in btn_class:
+                    skip_button = btn
+                    print(f"Found SKIP button: '{btn['text']}'")
+                elif any(word in btn_text for word in ['submit', 'check', 'next', 'continue']):
+                    submit_button = btn
+                    print(f"Found SUBMIT button: '{btn['text']}'")
+            
+            # Priority order: Verify > Submit > Skip
+            # This ensures we always try to complete the challenge first
+            target_button = verify_button or submit_button or skip_button
+            
+            if target_button:
+                button_type = "VERIFY" if verify_button else ("SUBMIT" if submit_button else "SKIP")
+                print(f"Clicking {button_type} button: '{target_button['text']}' at ({target_button['x']}, {target_button['y']})")
+                
+                # Click using Playwright's frame click method
+                try:
+                    await challenge_frame.mouse.click(target_button['x'], target_button['y'])
+                    print("Button clicked successfully!")
+                    return True
+                except Exception as e:
+                    print(f"Mouse click failed: {e}")
+                    
+                    # Fallback: try clicking by selector
+                    try:
+                        button_elements = await challenge_frame.query_selector_all('button, input[type="button"], input[type="submit"], [role="button"]')
+                        for btn_element in button_elements:
+                            btn_text = await btn_element.inner_text()
+                            if target_button['text'] in btn_text:
+                                await btn_element.click()
+                                print("Button clicked via selector!")
+                                return True
+                    except Exception as e2:
+                        print(f"Selector click also failed: {e2}")
+            
+            # Last resort: try clicking common button positions
+            print("Trying fallback button positions...")
+            fallback_positions = [
+                (400, 350),  # Common verify button position
+                (450, 400),  # Skip button position
+                (500, 450),  # Alternative position
             ]
             
-            for selector in button_selectors:
+            for x, y in fallback_positions:
                 try:
-                    buttons = await challenge_frame.query_selector_all(selector)
-                    for button in buttons:
-                        is_visible = await button.is_visible()
-                        if is_visible:
-                            button_text = await button.inner_text()
-                            print(f"Found button: '{button_text}'")
-                            
-                            # Click buttons with submit-like text
-                            if any(word in button_text.lower() for word in ['verify', 'submit', 'check', 'next']) or not button_text.strip():
-                                await button.click()
-                                print(f"Clicked button: '{button_text}'")
-                                submit_found = True
-                                break
+                    await challenge_frame.mouse.click(x, y)
+                    print(f"Clicked fallback position ({x}, {y})")
+                    await asyncio.sleep(0.5)
                 except:
                     continue
-                
-                if submit_found:
-                    break
             
-            if not submit_found:
-                print("No submit button found")
-            
-            return submit_found
+            return False
             
         except Exception as e:
             print(f"Error submitting: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     async def check_completion(self):
@@ -478,7 +544,7 @@ async def main():
                     print("Challenge solved!")
                 
                 # Check completion
-                await asyncio.sleep(2)
+                await asyncio.sleep(3)
                 if await solver.check_completion():
                     print("🎉 CAPTCHA COMPLETED SUCCESSFULLY! 🎉")
                     break
